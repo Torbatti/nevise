@@ -1,0 +1,22 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <meta name="author" content="Arya Bakhtiari">
+    <meta name="keywords" content={{.KeyWords}}>
+    <meta name="description" content={{.Description}}>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <link rel="stylesheet" href="/styles/albors.css">
+    <link rel="stylesheet" href="/styles/base.css">
+    {{template "head" .}}
+</head>
+<body class="bgc2">
+    {{template "content" .}}
+   
+</body>
+</html>
+{{end}}
