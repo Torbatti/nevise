@@ -1,0 +1,8 @@
+nevise.db
+
+# AIR
+tmp
+
+# ENV : see .env.sample
+.env
+.env.local
