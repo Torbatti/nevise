@@ -13,6 +13,7 @@ import (
 	"github.com/torbatti/nevise/core"
 	"github.com/torbatti/nevise/hx"
 	"github.com/torbatti/nevise/middlewares"
+	"github.com/torbatti/nevise/models"
 	"github.com/torbatti/nevise/routes"
 
 	"gorm.io/driver/sqlite"
@@ -41,6 +42,8 @@ func init() {
 	// TOKEN AUTH
 	tokenAuth = jwtauth.New("HS256", []byte(JWT_SECRET), nil)
 
+	middlewares.TokenAuth = tokenAuth
+	hx.TokenAuth = tokenAuth
 }
 
 func makeApp() *core.App {
@@ -59,7 +62,7 @@ func makeApp() *core.App {
 	} // db.Logger = logger.Default.LogMode(logger.Info)
 
 	// Database: Migrations
-	db.AutoMigrate()
+	db.AutoMigrate(&models.User{}, &models.Nazar{}, &models.Nevise{})
 
 	// Connecting
 	app.Router = chi.NewRouter()
@@ -70,24 +73,40 @@ func makeApp() *core.App {
 
 func main() {
 	app := makeApp()
-	middlewares.Register()
+	// middlewares.Register()
 
 	// Root
 	root := chi.NewRouter()
 
+	// Public Routes
 	root.Group(func(r chi.Router) {
-		// MiddleWares
 		middlewares.Cors(app.Router)
 
-		//Views
-		root.Get("/", routes.Index)
-		root.Get("/m-index", routes.MIndex)
-		root.Get("/m-signup", routes.MSignup)
-		root.Get("/m-login", routes.MLogin)
+		r.Get("/m-signup", routes.MSignup)
+		r.Get("/m-login", routes.MLogin)
+		r.Post("/hx/signup/{platform}", hx.Signup)
+		r.Post("/hx/login/{platform}", hx.Login)
 
 		// Public
 		public := http.FileServer(http.Dir("./public"))
-		root.Mount("/", public)
+		r.Mount("/", public)
+	})
+
+	// Private Routes
+	root.Group(func(r chi.Router) {
+		middlewares.Cors(app.Router)
+
+		r.Use(jwtauth.Verifier(tokenAuth))
+		r.Use(jwtauth.Authenticator)
+
+		//Views
+		r.Get("/", routes.Index)
+		r.Get("/m-index", routes.MIndex)
+		r.Post("/hx/nevise/{IsNewOrSave}", hx.Nevise)
+		r.Post("/hx/spawn_nevise", hx.SpawnNevise)
+		r.Post("/hx/empty", hx.Empty)
+		r.Post("/hx/index_nevise_ha", hx.IndexNeviseHa)
+
 	})
 	app.Router.Mount("/", root)
 
