@@ -2,6 +2,15 @@
   
 {{end}}
 
-{{define "content"}}
+{{define "main"}}
+  {{template "m-top" .}}
+  <div id="content">
+    <div id="ifNew" class=""></div>
+    <div id="posts">
+      <div id="start" hx-post="/hx/index_nevise_ha" hx-trigger="load" hx-swap="afterend"></div>
+    </div>
 
+  </div>
+  {{template "m-bottom" .}}
+  {{template "m-new" .}}
 {{end}}

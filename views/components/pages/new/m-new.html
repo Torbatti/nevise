@@ -1,0 +1,24 @@
+{{define "new"}}
+{{if .HaveMsg}}
+<div id="info_msg" class="text-center text-small" hx-post="/hx/empty" hx-trigger="revealed delay:2500ms" hx-target="#info_msg" hx-swap="outerHTML">
+    {{ if contains .Msg "save"}}
+      <h1>نویسه شما با موقیت ذخیره شد</h1>
+    {{ else if contains .Msg "new"}}
+      <h1>نویسه شما با موقیت ارسال شد</h1>
+    {{ else if contains .Msg "short"}}
+      <h1>موضوع و متن باید بلند تر از ۱۰ کاراکتر باشند</h1>
+    {{else}}
+    {{ end }}
+</div>
+{{end}}
+<div id="new_nevise">
+  <form action="">
+    <h1 class="text-small">موضوع</h1>
+    <input type="text" id="nevise_title" name="nevise_title">
+    <h1 class="text-small">متن</h1>
+    <textarea id="nevise_text" name="nevise_text"></textarea>
+    <button id="benevis_button" hx-post="/hx/nevise/new" hx-target="#ifNew" hx-swap="innerHTML">بنویس</button>
+    <button id="save_button" hx-post="/hx/nevise/save" hx-target="#ifNew" hx-swap="innerHTML">ذخیره</button>
+  </form>
+</div>
+{{end}}

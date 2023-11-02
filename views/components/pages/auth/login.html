@@ -1,0 +1,27 @@
+{{define "auth_form"}}
+  <div id="info" class="flex jcontent-between aitems-center high-gap">
+    <div class="flex aitems-center low-gap">
+      <div class="profile-pic"></div>
+      <a href="/m-index" class="text-large text-bold">نویس</a>
+    </div>
+    <div><h1 class="text-bold">ورود</h1></div>
+  </div>
+  
+  <form class="">
+    <div>
+      <h2 class="tc1 text-small text-bold">ایمیل</h2>
+      <input type="email" name="email" id="">
+    </div>
+    <div>
+      <h2 class="tc1 text-small text-bold">رمز عبور</h2>
+      <input type="password" name="password" id="">
+    </div>
+    <div>
+      <button hx-post="/hx/login/m">ورود</button>
+    </div>
+    <div id="more-links" class="flex jcontent-between">
+      <a href="/m-forgot" class="text-underline">فراموشی رمز</a>
+      <a href="/m-signup" class="text-underline">ثبت نام</a>
+    </div>
+  </form>
+{{end}}

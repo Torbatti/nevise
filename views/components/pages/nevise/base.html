@@ -1,0 +1,16 @@
+{{define "nevise"}}
+
+  <div id="index_nevise" class="flex flex-col low-gap"
+   hx-post="/hx/index_nevise_ha" hx-trigger="revealed" hx-swap="afterend">
+    <div class="flex low-gap aitems-center">
+      <a href="/users/{{.UserName}}" class="profile-pic flex jcontent-center aitems-center bgc1 tc2"> ;o;</a>
+      <div>
+        <a href="/users/{{.UserName}}" class="text-small">{{.UserName}}@</a>
+        <h1 class="text-small text-bold">{{.Title}}</h1>
+      </div>
+    </div>
+    <h1>{{.Text}}</h1>
+  </div>
+
+
+{{end}}

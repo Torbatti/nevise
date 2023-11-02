@@ -2,6 +2,8 @@
   <link rel="stylesheet" href="/styles/pages/auth/m-auth.css">
 {{end}}
 
-{{define "content"}}
-
+{{define "main"}}
+  <div id="content">
+    {{template "auth_form" .}}
+  </div>
 {{end}}

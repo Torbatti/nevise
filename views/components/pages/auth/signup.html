@@ -1,0 +1,35 @@
+{{define "auth_form"}}
+  <div id="info" class="flex jcontent-between aitems-center high-gap">
+    <div class="flex aitems-center low-gap">
+      <div class="profile-pic"></div>
+      <a href="/m-index" class="text-large text-bold">نویس</a>
+    </div>
+    <div><h1 class="text-bold">ثبت نام</h1></div>
+  </div>
+  
+  <form class="">
+    <div>
+      <h2 class="tc1 text-small text-bold">نام کاربری</h2>
+      <input type="text" name="user_name" id="">
+    </div>
+    <div>
+      <h2 class="tc1 text-small text-bold">ایمیل</h2>
+      <input type="email" name="email" id="">
+    </div>
+    <div>
+      <h2 class="tc1 text-small text-bold">رمز عبور</h2>
+      <input type="password" name="password" id="">
+    </div>
+    <div>
+      <button hx-post="/hx/signup/m">ثبت نام</button>
+    </div>
+    <div id="more-links" class="flex jcontent-between">
+      <a href="/m-termsofservice" class="text-underline">قوانین و مقررات</a>
+      <a href="/m-login" class="text-underline">ورود</a>
+    </div>
+  </form>
+  <script>
+    console.log(Cookies.get());
+
+  </script>
+{{end}}
