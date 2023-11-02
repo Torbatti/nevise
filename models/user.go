@@ -7,4 +7,7 @@ type User struct {
 	CreatedAt time.Time
 	UserName  string `json:"user_name"`
 	Email     string `json:"email"`
+	Hash      string
+	NeviseHa  []Nevise `gorm:"foreignKey:UserRefer"`
+	NazarHa   []Nazar  `gorm:"foreignKey:UserRefer"`
 }
