@@ -11,11 +11,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type SignupForm struct {
-	Email    string
-	Password string
-}
-
 func Signup(w http.ResponseWriter, r *http.Request) {
 
 	// log.Println(r.FormValue("email"))
@@ -26,7 +21,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 
 	// Check If password is shorter than 5 characters
 	if len(r.FormValue("user_name")) < 5 {
-
+		fmt.Println("Username too short !")
 		return
 	}
 
@@ -50,12 +45,11 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		user = models.User{
 			UserName: user_name,
 			Email:    email,
-			Hash:     string(hashString),
+			Hash:     hashString,
 		}
 		App.Db.Create(&user)
 
 		_, tokenString, _ := TokenAuth.Encode(map[string]interface{}{"user_id": user.ID})
-		fmt.Printf("DEBUG: a sample jwt is %s\n\n", tokenString)
 
 		cookie := http.Cookie{
 			Name:     "jwt",
@@ -68,20 +62,19 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		}
 		http.SetCookie(w, &cookie)
 
+		platformParam := chi.URLParam(r, "platform")
+		if platformParam == "m" {
+			w.Header().Add("HX-REDIRECT", "/m-index")
+		} else {
+			w.Header().Add("HX-REDIRECT", "/")
+		}
+
 	} else {
 		if username_exist_err != gorm.ErrRecordNotFound {
 			log.Println("Username has already been taken !")
 		} else {
 			log.Println("Email is not a valid value !")
 		}
-	}
-
-	platformParam := chi.URLParam(r, "platform")
-	log.Println(platformParam)
-
-	if platformParam == "m" {
-		w.Header().Add("EMPTY", "")
-		// w.Header().Add("HX-Redirect", "/m-index")
 	}
 
 }
