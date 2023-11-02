@@ -22,14 +22,16 @@
   background-color:var(--c2);
   border-top:1px solid var(--c1);
   width:360px;
-  height:4rem;
+  height:3rem;
 
   position:fixed;
   bottom:0;
   right:0;
 }
+#bottom img{width:32px;}
 #m-new{
-  background-color: var(--c1);
+  background-color: rgb(58, 58, 58);
+  border:2px solid var(--c2);
   border-radius:50%;
 
   width:3rem;
@@ -38,8 +40,8 @@
   cursor:pointer;
   
   position:sticky;
-  bottom: 5rem;
-  right: 1.25rem;
+  bottom: 4rem;
+  right: 1rem;
 }
 #info_msg{
   border-bottom:1px solid var(--c1);
